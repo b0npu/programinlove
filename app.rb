@@ -4,7 +4,7 @@ require 'sinatra/reloader'
 # ブラウザに表示するフォームのクラス
 class MyForm
   # @timesへのアクセスメソッド
-  attr_accessor :times  
+  attr_accessor :times
 
   def initialize
     @times = 0    # ボタンをクリックした回数
@@ -15,7 +15,7 @@ class MyForm
     @times += 1
   end
 end
- 
+
 myform = MyForm.new
 
 # URL'/'にアクセス

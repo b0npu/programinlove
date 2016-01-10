@@ -1,0 +1,57 @@
+* {
+  box-sizing: border-box;
+}
+
+/*----------------------------
+ * チャットのインターフェース
+----------------------------*/
+#nobyform {
+  display: table-cell;
+  vertical-align: middle;
+}
+
+/*----------------------------
+ * 応答メッセージを表示する
+ * 角丸の吹き出し
+----------------------------*/
+#responsearea {
+  width: 290px;
+  margin-top: 30px;
+  margin-bottom: 30px;
+  border: 1px solid #333;
+  border-radius: 10px;
+  background: #333;
+}
+
+/* 吹き出しの三角部分 */
+#responsearea:before {
+  content: '';
+  position: relative;
+  top: -40px;
+  left: 30%;
+  border-top: 20px solid transparent;
+  border-right: 20px solid transparent;
+  border-left: 20px solid transparent;
+  border-bottom: 25px solid #333;
+}
+
+/* 吹き出しの中の文字 */
+#responsearea p{
+  height: 40px;
+  margin-top: 5px;
+  margin-bottom: 10px;
+  color: #fff;
+  text-align: center;
+  font-size: 100%;
+}
+
+/*----------------------------
+ * 会話のログを表示する
+----------------------------*/
+#logarea {
+  width: 300px;
+  height: 380px;
+  display: table-cell;
+  background-color: #f9f9f9;
+  overflow: scroll;
+}

@@ -1,10 +1,32 @@
 <html>
+  <!-- publicフォルダのcssファイルを読み込む -->
+  <link href="styles.css" rel="stylesheet">
   <body>
-    <!-- ボタンを押すとPOSTメソッドで'/'にアクセス -->
-    <form action="/" method="post">
-      <!-- Rubyで生成したインスタンス変数@btn_captionをボタンに表示 -->
-      <button type="submit"><%= @btn_caption %></button>
-    </form>
+    <!-- チャットのインターフェースを囲う枠 -->
+    <div id="nobyform">
+      <!-- キャラクターの画像を表示 -->
+      <div id="nobycanvas">
+        <img src="img/normal/0000.bmp">
+      </div>
+      <!-- キャラクターからの応答メッセージを表示 -->
+      <div id="responsearea">
+        <p></p>
+      </div>
+      <!-- ユーザの会話を入力するフォーム -->
+      <div>
+        <form action="/" method="post">
+          <!-- ボタンを押すと会話を'/'にPOSTする -->
+          <input type"text" placeholder="会話を入力">
+          <button type="submit">話す</button>
+        </form>
+      </div>
+    </div>
+    <!-- 会話のログを表示 -->
+    <div id="logarea">
+    </div>
+    <!-- キャラクターの画像をアニメーションさせるJavaScript -->
+    <script>
+    </script>
   </body>
 </html>
 
