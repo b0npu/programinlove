@@ -6,7 +6,7 @@
     <div id="nobyform">
       <!-- キャラクターの画像を表示 -->
       <div id="nobycanvas">
-        <img src="img/normal/0000.bmp">
+        <img src="img/normal/0000.png">
       </div>
       <!-- キャラクターからの応答メッセージを表示 -->
       <div id="responsearea">
@@ -22,10 +22,28 @@
       </div>
     </div>
     <!-- 会話のログを表示 -->
-    <div id="logarea">
-    </div>
+    <div id="logarea"></div>
     <!-- キャラクターの画像をアニメーションさせるJavaScript -->
     <script>
+      document.addEventListener('DOMContentLoaded', function(){
+        var index = 0;
+        var cnt = 0;
+        var imgArray = ["img/normal/0000.png",
+                        "img/blink/0000.png",
+                        "img/blink/0001.png"
+        ];
+        /* nobycanvasのimgを順番に表示する */
+        function flipAnime(){
+          document.getElementById("nobycanvas").getElementsByTagName("img")[0].src = imgArray[index];
+          index++;
+          if (index >= imgArray.length){
+            index = 0;
+          cnt++;
+          }
+        };
+        /* flipAnimeを呼んでアニメーションにする */
+        setInterval(flipAnime, 100);
+      });
     </script>
   </body>
 </html>
