@@ -12,37 +12,56 @@
       <div id="responsearea">
         <p></p>
       </div>
-      <!-- ユーザの会話を入力するフォーム -->
+      <!-- 会話やオプションの状態をPOSTするフォーム -->
       <div>
         <form action="/" method="post">
           <!-- ボタンを押すと会話を'/'にPOSTする -->
-          <input type"text" placeholder="会話を入力">
-          <button type="submit">話す</button>
+          <div>
+            <input type="text" name="inputarea" placeholder="会話を入力">
+            <button type="submit">話す</button>
+          </div>
+          <!-- ログにResponderを表示するオプション -->
+          <div>
+            <label><input type="checkbox" name="respoption" value="show">Responderを表示</label>
+          </div>
         </form>
       </div>
     </div>
     <!-- 会話のログを表示 -->
-    <div id="logarea"></div>
+    <div id="logarea">
+      <%= @talk_log %>
+    </div>
     <!-- キャラクターの画像をアニメーションさせるJavaScript -->
     <script>
       document.addEventListener('DOMContentLoaded', function(){
-        var index = 0;
-        var cnt = 0;
-        var imgArray = ["img/normal/0000.png",
+        var index = 0;    /* 配列の要素番号 */
+        var cnt = 0;      /* 瞬きの回数 */
+
+        /* 瞬きのアニメーション用の画像 */
+        var blinkImg = ["img/normal/0000.png",
                         "img/blink/0000.png",
-                        "img/blink/0001.png"
+                        "img/blink/0001.png",
+                        "img/normal/0000.png"
         ];
-        /* nobycanvasのimgを順番に表示する */
+
+        /* 瞬きのアニメーションを作成     */
+        /* ２回の瞬きでアニメーション終了 */
         function flipAnime(){
-          document.getElementById("nobycanvas").getElementsByTagName("img")[0].src = imgArray[index];
+          document.getElementById("nobycanvas").getElementsByTagName("img")[0].src = blinkImg[index];
           index++;
-          if (index >= imgArray.length){
+          if (index >= blinkImg.length){
             index = 0;
-          cnt++;
+            cnt++;
           }
+          if (cnt > 1){
+            cnt = 0;
+            clerTimeout(timeoutId);
+          }
+          timeoutId = setTimeout(flipAnime, 100);
         };
-        /* flipAnimeを呼んでアニメーションにする */
-        setInterval(flipAnime, 100);
+
+        /* 瞬きのアニメーションを表示する */
+        setInterval(flipAnime, 3000);
       });
     </script>
   </body>

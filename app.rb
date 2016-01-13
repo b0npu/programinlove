@@ -1,34 +1,20 @@
 require 'sinatra'
 require 'sinatra/reloader'
 
-# ブラウザに表示するフォームのクラス
-class MyForm
-  # @timesへのアクセスメソッド
-  attr_accessor :times
-
-  def initialize
-    @times = 0    # ボタンをクリックした回数
-  end
-
-  def btn_clicked
-    # ボタンをクリックするとカウントアップ
-    @times += 1
-  end
-end
-
-myform = MyForm.new
+# 会話ログを格納する配列
+talk = []
 
 # URL'/'にアクセス
 get '/' do
-  # ボタンの数字を0にしてviewsフォルダのindex.erbを表示
-  myform.times = 0
-  @btn_caption = myform.times
+  # nobyfomを表示
   erb :index
 end
 
 # URL'/'にPOSTメソッドでアクセス
 post '/' do
-  # ボタンの数字を増やしてviewsフォルダのindex.erbを表示
-  @btn_caption = myform.btn_clicked
+  # ユーザの入力を会話ログに表示
+  talk << "#{params['inputarea']}<br>"
+  @talk_log = talk.join
+
   erb :index
 end
