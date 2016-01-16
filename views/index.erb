@@ -10,7 +10,7 @@
       </div>
       <!-- キャラクターからの応答メッセージを表示 -->
       <div id="responsearea">
-        <p></p>
+        <p><%= @responder_resp %></p>
       </div>
       <!-- 会話やオプションの状態をPOSTするフォーム -->
       <div>
@@ -22,7 +22,7 @@
           </div>
           <!-- ログにResponderを表示するオプション -->
           <div>
-            <label><input type="checkbox" name="respoption" value="show">Responderを表示</label>
+            <label><input type="checkbox" name="respoption" value="show" <%= @check %>>Responderを表示</label>
           </div>
         </form>
       </div>
