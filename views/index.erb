@@ -35,32 +35,46 @@
     <script>
       document.addEventListener('DOMContentLoaded', function(){
         var index = 0;    /* 配列の要素番号 */
-        var cnt = 0;      /* 瞬きの回数 */
 
+        /* 通常時の画像 */
+        var normalImg = ["img/normal/0000.png"];
         /* 瞬きのアニメーション用の画像 */
         var blinkImg = ["img/normal/0000.png",
                         "img/blink/0000.png",
                         "img/blink/0001.png",
-                        "img/normal/0000.png"
-        ];
+                        "img/normal/0000.png"];
+        /* 見回すアニメーション用の画像 */
+        var lookImg = ["img/normal/0000.png",
+                       "img/lookaround/0000.png",
+                       "img/lookaround/0001.png",
+                       "img/lookaround/0002.png",
+                       "img/lookaround/0003.png",
+                       "img/lookaround/0004.png",
+                       "img/normal/0000.png"];
 
-        /* 瞬きのアニメーションを作成     */
-        /* ２回の瞬きでアニメーション終了 */
+        /* 関数の中で画像を操作するための配列 */
+        var animePtn = [normalImg, blinkImg, lookImg];
+        var imgAry = [];
+
+        /* ３種類のアニメーションからランダムに選択 */
+        function selectAnime() {
+          imgAry = animePtn[Math.floor(Math.random() * 3)];
+        }
+
+        /* 画像を順番に表示してアニメーションを作成 */
         function flipAnime(){
-          document.getElementById("nobycanvas").getElementsByTagName("img")[0].src = blinkImg[index];
+          document.getElementById("nobycanvas").getElementsByTagName("img")[0].src = imgAry[index];
           index++;
-          if (index >= blinkImg.length){
+          if (index >= imgAry.length){
             index = 0;
-            cnt++;
-          }
-          if (cnt > 1){
-            cnt = 0;
             clerTimeout(timeoutId);
           }
           timeoutId = setTimeout(flipAnime, 100);
-        };
+        }
 
-        /* 瞬きのアニメーションを表示する */
+        /* 表示するアニメーションを選択する */
+        setInterval(selectAnime, 3000);
+        /* アニメーションを表示する */
         setInterval(flipAnime, 3000);
       });
     </script>
