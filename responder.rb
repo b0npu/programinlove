@@ -1,15 +1,14 @@
 class Responder
-  def initialize(name)
+  def initialize(name, dictionary)
     @name = name
+    @dictionary = dictionary
   end
 
   def response(input)
     return ''
   end
 
-  def name
-    return @name
-  end
+  attr_reader :name
 end
 
 class WhatResponder < Responder
@@ -19,12 +18,20 @@ class WhatResponder < Responder
 end
 
 class RandomResponder < Responder
-  def initialize(name)
-    super
-    @responses = ['今日はさむいね', 'チョコたべたい', 'きのう10円ひろった']
-  end
-
   def response(input)
-    return @responses[rand(@responses.size)]
+    return select_random(@dictionary.random)
+  end
+end
+
+class PatternResponder < Responder
+  def response(input)
+    @dictionary.pattern.each do |ptn_item|
+      if m = input.match(ptn_item['pattern'])
+        resp = select_random(ptn_item['phrases'].split('|'))
+        return resp.gsub(/%match%/, m.to_s)
+      end
+    end
+
+    return select_random(@dictionary.random)
   end
 end
