@@ -41,6 +41,7 @@ post '/' do
 
   # ユーザの入力があれば応答して会話ログに表示
   unless talk_text.empty?
+    @noby_state = "talking"
     @responder_resp = noby.dialogue(talk_text)
     log_area << "> #{talk_text}<br>"
     log_area << "#{prompt(resp_opt)}> #{@responder_resp}<br>"
