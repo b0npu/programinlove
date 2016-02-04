@@ -19,6 +19,16 @@ helpers do
     # 応答を表示する際のプロンプトを作成
     resp_opt ? "#{noby.name}：#{noby.responder_name}" : "#{noby.name}"
   end
+
+  def change_looks
+    case noby.mood
+    when -5..5 then 'talk'
+    when -10..5 then 'angry_talk'
+    when -15..-10 then 'more_angry_talk'
+    when 5..10 then 'happy_talk'
+    when 10..15 then 'more_happy_talk'
+    end
+  end
 end
 
 # URL'/'にアクセス
@@ -41,7 +51,7 @@ post '/' do
 
   # ユーザの入力があれば応答して会話ログに表示
   unless talk_text.empty?
-    @noby_state = "talking"
+    @noby_state = change_looks
     @responder_resp = noby.dialogue(talk_text)
     log_area << "> #{talk_text}<br>"
     log_area << "#{prompt(resp_opt)}> #{@responder_resp}<br>"
