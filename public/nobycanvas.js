@@ -93,22 +93,10 @@ document.addEventListener('DOMContentLoaded', function(){
   /* 機嫌が悪い時のパターン */
   var angryPtn = [
     ["img/angry/0000.png"],
-    [
-      "img/angry/0000.png",
-      "img/angry_blink/0000.png",
-      "img/angry_blink/0001.png",
-      "img/angry/0000.png"
-    ]
   ];
-  /* 上機嫌の時のパターン */
+  /* 怒っている時のパターン */
   var moreAngryPtn = [
     ["img/more_angry/0000.png"],
-    [
-      "img/more_angry/0000.png",
-      "img/more_angry_blink/0000.png",
-      "img/more_angry_blink/0001.png",
-      "img/more_angry/0000.png"
-    ]
   ];
 
   /* 関数の中で画像を操作するための変数 */
@@ -116,6 +104,7 @@ document.addEventListener('DOMContentLoaded', function(){
   var imgAry = [];
   var timeoutId;
 
+  /* 応答時のアニメーションを表示 */
   function respAnime(looks) {
     imgAry = talkPtn[looks];
     nobyState = '';
@@ -133,30 +122,37 @@ document.addEventListener('DOMContentLoaded', function(){
     index++;
     if (index >= imgAry.length){
       index = 0;
-      clearTimeout(timeoutId);
+      clerTimeout(timeoutId);
     }
     timeoutId = setTimeout(flipAnime, 100);
   }
 
+  /* 情緒状態によって表情を変化させる */
   /* 応答時は喋るアニメーションを表示 */
   switch (nobyState) {
     case 'talk':
       respAnime('talk');
       animePtn = normalPtn;
+      break;
     case 'happy_talk':
       respAnime('happy_talk');
       animePtn = happyPtn;
+      break;
     case 'more_happy_talk':
       respAnime('more_happy_talk');
       animePtn = moreHappyPtn;
+      break;
     case 'angry_talk':
       respAnime('angry_talk');
       animePtn = angryPtn;
+      break;
     case 'more_angry_talk':
       respAnime('more_angry_talk');
       animePtn = moreAngryPtn;
+      break;
     default:
       animePtn = normalPtn;
+      break;
   }
 
   /* 待機時は適当なアニメーションを選んで表示する */

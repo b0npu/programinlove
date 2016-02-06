@@ -7,12 +7,19 @@ require_relative 'unmo'
 # 会話ログを格納する配列
 log_area = []
 
+# 起動時にオプションを設定する
+# 状態を保持するオブジェクトの生成に使う
+configure do
+  # ノビィ生成
+  set :noby, Unmo.new('noby')
+end
+
 # ヘルパーメソッドを定義する
 # ルーティングメソッドの中で使う
 helpers do
   def noby
-    # ノビィ生成
-    @noby ||= Unmo.new('noby')
+    # ノビィへアクセス
+    noby = settings.noby
   end
 
   def prompt(resp_opt)
@@ -21,9 +28,10 @@ helpers do
   end
 
   def change_looks
+    # 感情値で表情を変化させる
     case noby.mood
     when -5..5 then 'talk'
-    when -10..5 then 'angry_talk'
+    when -10..-5 then 'angry_talk'
     when -15..-10 then 'more_angry_talk'
     when 5..10 then 'happy_talk'
     when 10..15 then 'more_happy_talk'
@@ -51,10 +59,10 @@ post '/' do
 
   # ユーザの入力があれば応答して会話ログに表示
   unless talk_text.empty?
-    @noby_state = change_looks
     @responder_resp = noby.dialogue(talk_text)
     log_area << "> #{talk_text}<br>"
     log_area << "#{prompt(resp_opt)}> #{@responder_resp}<br>"
+    @noby_state = change_looks
   end
 
   @talk_log = log_area.join
