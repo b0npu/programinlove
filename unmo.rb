@@ -24,7 +24,14 @@ class Unmo
     else
       @responder = @resp_what
     end
-    return @responder.response(input, @emotion.mood)
+    resp = @responder.response(input, @emotion.mood)
+
+    @dictionary.study(input)
+    return resp
+  end
+
+  def save
+    @dictionary.save
   end
 
   def responder_name

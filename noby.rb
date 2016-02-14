@@ -37,10 +37,22 @@ helpers do
     when 10..15 then 'more_happy_talk'
     end
   end
+
+  def save_log(log)
+    # ファイルにログを書き込む
+    noby.save
+
+    open('log.txt', 'a') do |f|
+      f.puts(log)
+    end
+  end
 end
 
 # URL'/'にアクセス
 get '/' do
+  # 日時情報をログに格納
+  log = "\nUnmo System : #{noby.name} Log -- #{Time.now}"
+  save_log(log)
   # 会話ログを初期化してnobyfomを表示
   log_area = []
 
@@ -63,6 +75,8 @@ post '/' do
     log_area << "> #{talk_text}<br>"
     log_area << "#{prompt(resp_opt)}> #{@responder_resp}<br>"
     @noby_state = change_looks
+
+    save_log(talk_text)
   end
 
   @talk_log = log_area.join

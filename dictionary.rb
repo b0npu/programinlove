@@ -19,6 +19,17 @@ class Dictionary
     end
   end
 
+  def study(input)
+    return if @random.include?(input)
+    @random.push(input)
+  end
+
+  def save
+    open('dics/random.txt', 'w') do |f|
+      f.puts(@random)
+    end
+  end
+
   attr_reader :random, :pattern
 end
 
