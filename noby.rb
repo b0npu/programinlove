@@ -12,6 +12,8 @@ log_area = []
 configure do
   # ノビィ生成
   set :noby, Unmo.new('noby')
+  # 形態素解析のためにMorphモジュールを初期化
+  set :morph, Morph::init_analyzer
 end
 
 # ヘルパーメソッドを定義する
