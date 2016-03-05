@@ -17,11 +17,23 @@ class Dictionary
         @pattern.push(PatternItem.new(pattern, phrases))
       end
     end
+
+    @template = []
+    open('dics/template.txt') do |f|
+      f.each do |line|
+        count, template = line.chomp.split(/\t/)
+        next if count.nil? or pattern.nil?
+        count = count.to_i
+        @template[count] = [] unless @template[count]
+        @template[count].push(template)
+      end
+    end
   end
 
   def study(input, parts)
     study_random(input)
     study_pattern(input, parts)
+    study_template(parts)
   end
 
   def study_random(input)
@@ -41,6 +53,24 @@ class Dictionary
     end
   end
 
+  def study_template(parts)
+    template = ''
+    count = 0
+    parts.each do |word, part|
+      if Morph::keyword?(part)
+        word = '%noun%'
+        count += 1
+      end
+      template += word
+    end
+    return unless count > 0
+
+    @template[count] = [] unless @template[count]
+    unless @template[count].include?(template)
+      @template[count].push(template)
+    end
+  end
+
   def save
     open('dics/random.txt', 'w') do |f|
       f.puts(@random)
@@ -49,9 +79,18 @@ class Dictionary
     open('dics/pattern.txt', 'w') do |f|
       @pattern.each{|ptn_item| f.puts(ptn_item.make_line)}
     end
+
+    open('dics/template.txt', 'w') do |f|
+      @template.each_with_index do |templates, i|
+        next if templates.nil?
+        templates.each do |template|
+          f.puts(i.to_s + "\t" + template)
+        end
+      end
+    end
   end
 
-  attr_reader :random, :pattern
+  attr_reader :random, :pattern, :template
 end
 
 class PatternItem
