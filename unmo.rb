@@ -13,6 +13,7 @@ class Unmo
     @resp_pattern = PatternResponder.new('Pattern', @dictionary)
     @resp_template = TemplateResponder.new('Template', @dictionary)
     @resp_morkov = MarkovResponder.new('Markov', @dictionary)
+    @resp_gugulu = GuguluResponder.new('Google', @dictionary)
     @responder = @resp_pattern
   end
 
@@ -21,14 +22,16 @@ class Unmo
     parts = Morph::analyze(input)
 
     case rand(100)
-    when 0..29
+    when 0..19
       @responder = @resp_pattern
-    when 30..49
+    when 20..39
       @responder = @resp_template
-    when 50..69
+    when 40..54
       @responder = @resp_random
-    when 70..89
+    when 55..74
       @responder = @resp_markov
+    when 75..94
+      @responder = @resp_gugulu
     else
       @responder = @resp_what
     end

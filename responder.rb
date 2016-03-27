@@ -1,3 +1,7 @@
+require_relative 'utils'
+require_relative 'morph'
+require_relative 'gugulu'
+
 class Responder
   def initialize(name, dictionary)
     @name = name
@@ -58,6 +62,42 @@ class MarkovResponder < Responder
     keyword, p = parts.find{|w, part| Morph::keyword?(part)}
     resp = @dictionary.markov.generate(keyword)
     return resp unless resp.nil?
+
+    return select_random(@dictionary.random)
+  end
+end
+
+class GuguluResponder < Responder
+  def initialize(name, dictionary)
+    @ggl = Gugulu.new
+    @query_opts = ''
+    super
+  end
+
+  def response(input, parts, mood)
+    keywords = []
+    parts.each{|w, p| keywords.push(w) if Morph::keyword?(p)}
+    query = (keywords.empty?) ? input : keywords.join(' ')
+    query += ' ' + @query_opts
+
+    begin
+      result = @ggl.search(query)
+      raise('no results') if result.empty?
+      elem = select_random(result)
+      sentences = Gugulu::get_sentences(elem[:url])
+
+      markov = Markov.new
+      sentences.each do |line|
+        parts = Morph::analyze(line)
+        markov.add_sentence(parts)
+        @dictionary.study(line, parts)
+      end
+
+      resp = markov.generate(select_random(keywords))
+      return resp unless resp.nil?
+    rescue => e
+      puts(e.message)
+    end
 
     return select_random(@dictionary.random)
   end

@@ -20,5 +20,20 @@ module Morph
     return /名詞-(一般|固有名詞|サ変接続|形容動詞語幹)/ =~ part
   end
 
-  module_function :init_analyzer, :analyze, :keyword?
+  def sentence?(parts)
+    num_noun = 0
+    num_mark = 0
+    parts.each do |w, part|
+      case part
+      when /^名詞/
+        num_noun += 1
+      when /^記号-(?!(読点)|(句点))/
+        num_mark += 1
+      end
+    end
+
+    return parts.size > (num_noun + num_mark) * 2
+  end
+
+  module_function :init_analyzer, :analyze, :keyword?, :sentence?
 end

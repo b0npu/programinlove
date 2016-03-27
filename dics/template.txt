@@ -72,6 +72,7 @@
 1	かわいい%noun%
 1	%noun%ばい
 1	%noun%を読んだことはありますか
+1	もう%noun%ですね
 2	%noun%で%noun%食べる？
 2	%noun%%noun%ばっかだな
 2	%noun%は%noun%のときにやるんだよ
@@ -103,6 +104,7 @@
 2	かわいい%noun%%noun%
 2	それでは%noun%も%noun%で
 2	%noun%場の%noun%は面白いですね
+2	%noun%の%noun%ですよ
 3	%noun%を%noun%%noun%に食べさせる
 3	%noun%%noun%%noun%かな？よくわかりません
 3	お%noun%は%noun%%noun%じゃないと思うぞ
