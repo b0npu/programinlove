@@ -12,7 +12,7 @@ class Unmo
     @resp_random = RandomResponder.new('Random', @dictionary)
     @resp_pattern = PatternResponder.new('Pattern', @dictionary)
     @resp_template = TemplateResponder.new('Template', @dictionary)
-    @resp_morkov = MarkovResponder.new('Markov', @dictionary)
+    @resp_markov = MarkovResponder.new('Markov', @dictionary)
     @responder = @resp_pattern
   end
 
