@@ -118,13 +118,14 @@ document.addEventListener('DOMContentLoaded', function(){
 
   /* 画像を順番に表示してアニメーションを作成 */
   function flipAnime(){
+    timeoutId = setTimeout(flipAnime, 100);
+
     document.getElementById("nobycanvas").getElementsByTagName("img")[0].src = imgAry[index];
     index++;
     if (index >= imgAry.length){
       index = 0;
-      clerTimeout(timeoutId);
+      clearTimeout(timeoutId);
     }
-    timeoutId = setTimeout(flipAnime, 100);
   }
 
   /* 情緒状態によって表情を変化させる */
